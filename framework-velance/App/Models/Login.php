@@ -30,7 +30,7 @@ class Login
                 $user = $stmt->fetch();
                 
                 if (password_verify($senha, $user['senha'])) {
-                    unset($user['senha']); // Remove a senha do array
+                    unset($user['senha']);
 
                     return json_encode([
                         'id_usuario' => $user['id'],
