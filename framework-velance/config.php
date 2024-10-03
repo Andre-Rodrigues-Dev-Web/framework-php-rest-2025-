@@ -2,6 +2,6 @@
     //Mysql
     const DBDRIVE = 'mysql';
     const DBHOST = 'localhost';
-    const DBNAME = 'serie_login';
+    const DBNAME = 'framework_velance';
     const DBUSER = 'root';
     const DBPASS = '';

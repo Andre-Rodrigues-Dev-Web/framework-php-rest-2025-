@@ -3,10 +3,14 @@
 
     class User
     {
-        private static $table = 'user';
+        private static $table = 'login';
+
+        private static function getConnection() {
+            return new \PDO(DBDRIVE.': host='.DBHOST.'; dbname='.DBNAME, DBUSER, DBPASS);
+        }
 
         public static function select(int $id) {
-            $connPdo = new \PDO(DBDRIVE.': host='.DBHOST.'; dbname='.DBNAME, DBUSER, DBPASS);
+            $connPdo = self::getConnection();
 
             $sql = 'SELECT * FROM '.self::$table.' WHERE id = :id';
             $stmt = $connPdo->prepare($sql);
@@ -21,7 +25,7 @@
         }
 
         public static function selectAll() {
-            $connPdo = new \PDO(DBDRIVE.': host='.DBHOST.'; dbname='.DBNAME, DBUSER, DBPASS);
+            $connPdo = self::getConnection();
 
             $sql = 'SELECT * FROM '.self::$table;
             $stmt = $connPdo->prepare($sql);
@@ -36,7 +40,7 @@
 
         public static function insert($data)
         {
-            $connPdo = new \PDO(DBDRIVE.': host='.DBHOST.'; dbname='.DBNAME, DBUSER, DBPASS);
+            $connPdo = self::getConnection();
 
             $sql = 'INSERT INTO '.self::$table.' (email, password, name) VALUES (:em, :pa, :na)';
             $stmt = $connPdo->prepare($sql);
@@ -49,6 +53,21 @@
                 return 'Usuário(a) inserido com sucesso!';
             } else {
                 throw new \Exception("Falha ao inserir usuário(a)!");
+            }
+        }
+
+        public static function delete(int $id) {
+            $connPdo = self::getConnection();
+
+            $sql = 'DELETE FROM '.self::$table.' WHERE id = :id';
+            $stmt = $connPdo->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                return 'Usuário(a) deletado com sucesso!';
+            } else {
+                throw new \Exception("Falha ao deletar usuário(a) ou usuário(a) não encontrado!");
             }
         }
     }

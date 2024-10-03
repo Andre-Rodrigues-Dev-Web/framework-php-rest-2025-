@@ -1,8 +1,16 @@
 <?php
 
-    $url = 'http://localhost/PROJS/VIDEO_AULAS/SERIE/03_APIREST2021/public_html/api';
+    $url = 'http://localhost/www/framework-php-rest-2025-/framework-velance/public_html/api';
 
-    $class = '/user';
-    $param = '';
+    // Captura a classe e o parâmetro da URL
+    $class = isset($_GET['class']) ? '/' . $_GET['class'] : '/user';
+    $param = isset($_GET['param']) ? '/' . $_GET['param'] : '';
 
-    $response = file_get_contents($url.$class.$param);
+    // Verifica a classe usando match
+    $class = match (true) {
+        $class === '/login' => '/login',
+        preg_match('/^\/projetos(\/\d+)?$/', $class) => '/projetos',
+        default => '/user',
+    };
+
+    $response = file_get_contents($url . $class . $param);
