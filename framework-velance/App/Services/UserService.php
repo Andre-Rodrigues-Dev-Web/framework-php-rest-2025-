@@ -1,33 +1,25 @@
 <?php
-    namespace App\Services;
 
-    use App\Models\User;
+namespace App\Services;
 
-    class UserService
+use App\Models\User;
+
+class UserService
+{
+    public function get($id = null)
     {
-        public function get($id = null) 
-        {
-            if ($id) {
-                return User::select($id);
-            } else {
-                return User::selectAll();
-            }
-        }
-
-        public function post() 
-        {
-            $data = $_POST;
-
-            return User::insert($data);
-        }
-
-        public function update() 
-        {
-            
-        }
-
-        public function delete() 
-        {
-            
-        }
+        return $id ? User::select($id) : User::selectAll();
     }
+
+    public function post(array $data)
+    {
+        return User::insert($data);
+    }
+
+    public function update($id, array $data) {}
+
+    public function delete(int $id)
+    {
+        return User::delete($id);
+    }
+}
