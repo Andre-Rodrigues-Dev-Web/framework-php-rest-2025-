@@ -10,7 +10,7 @@ class VideoAulasService
             $videoAula = VideoAulas::select($id);
             return [
                 'status' => 'success',
-                'data' => [$videoAula] // Envolvendo em um array para seguir o formato esperado
+                'data' => [$videoAula]
             ];
         } catch (\Exception $e) {
             return [
